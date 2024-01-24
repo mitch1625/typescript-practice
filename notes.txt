@@ -1,0 +1,78 @@
+Working with Types
+
+1. Core Types - Types that are included in both TS and JS
+ - number   1, 5.3, -10   All numbers. No differentiation b/t int or floats
+ - string   'Hi', "Hi", `Hi`
+ - boolean 
+ - object
+ - arrays
+ - tuple - added by typescript - as a fixed length array
+ - enum - added by TS - automatically enumerated global constant identifiers
+ - any - * - Any kind of value can be passed in, no specific type assignment
+
+*** Typescript helps during compiling to catch errors ***
+i.e. Trying to pass a string where the input variable is defined as a number
+
+JS uses "dynamic types" that are resolved at runtime
+TS uses "static types" that are set during development
+
+TypeInference - TS attempts to understand the type of constant 
+If a variable is not iniated, you can define the variable type before initiation
+  let number1: number
+  number1 = 5
+TypeScript checks types and throws errors if used incorrectly
+
+
+Object
+- Objects in TS can be more specific in TS
+If an object is not defined as an object type: 
+    const person = {
+      name: 'Maximilian',
+      age: 30
+    }
+  - Object types are written as key:type pairs instead of key:value pairs
+
+If an object is defined with an object type:
+  const person: object = {
+    name: 'Maximilian',
+    age: 30
+  }
+  - TS only cares that the variable is an object, not the values
+  - Can NOT access keys or values with dot notation
+
+Can explicitly set key types when defining an object
+  const person: {
+    name: string      **<= This method is not best practice. Let TS infer the types
+    age: number
+  } = {
+    name: 'Maximilian',
+    age: 30
+  }
+
+
+Arrays
+- You create an array using the `any` keyword to let it be an array of different types
+
+Tuple
+- Fixed length array
+- Can define the types insde the tuple i.e. [string, number]
+
+Enum
+  enum {NEW, OLD}
+  - adds labels to numbers
+  enum Role { ADMIN, READ_ONLY, AUTHOR} based on position in the object 0,1,2
+  - can assign starting number or unique identifiers to each variable
+  enum Role {ADMIN = 'ADMIN', READ_ONLY = 100, AUTHOR = 'AUTHOR}
+  enum Role { ADMIN = 5, READ_ONLY, AUTHOR}  will assign numbers 5,6,7
+
+Any
+  - Can use Any keyword as a fallback if you do not know what type of data will be passed in
+  - Be careful when using it. 
+  - Any removes the specificity that TS gives you
+
+Union Types
+  - Unions allow different kinds of inputs to be entered with the |
+  - Runtime check might be required working with unions (line 3) depending on the logic
+
+Literal type
+  - Are the types that you're passing in
