@@ -1,6 +1,7 @@
-var userInput; // unknown is unknown because we do not know what the user will pass it
+"use strict";
+let userInput; // unknown is unknown because we do not know what the user will pass it
 // we can store anything in unknown and get no compilation errors
-var userName;
+let userName;
 userInput = 5,
     userInput = 'Max';
 // userName = userInput this line will throw an error. because userInput is not garuanteed to be a string

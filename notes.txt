@@ -1,3 +1,6 @@
+SET UP
+npm install typescript --save-dev
+
 Working with Types
 
 1. Core Types - Types that are included in both TS and JS

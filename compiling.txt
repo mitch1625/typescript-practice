@@ -1,0 +1,49 @@
+tsc <filename> -w -> enters watchmode
+  - anytime that file is updated, it will automatically be recompiled
+
+tsc --init
+  - does not point at a specific file
+  - will compile all files in that directory if they are changed
+  - creates a new json file with several options
+  - command tsc to compile all ts files 
+
+
+EXCLUDING
+  - In tsconfig.json can add "exclude" to ignore files
+    "exclude": [
+      "analytics.ts",
+      "node_modules"
+      "*.dev.ts"    -> can use wildcard to ignore .dev.ts files
+    ]
+  - node_modules is automatically excluded if no other files are excluded
+  - if you create any exclude files, will have to write "node_modules"
+
+
+INCLUDE
+  - if you use incldue key , MUST list ALL files/folder you want to include
+
+
+compilerOptions
+  - "target" specifies which target JS version you want to code
+  - "sourceMap" helps with debugging and development
+    - when set to true, allows the files to be accessed in the browser to simplify debugging
+  - "outDir" sets a directory to where the created files (js files) are created
+  - "rootDir" specifies the src folder where all ts files are contained. TS compiler wil only look in this folder
+  - "removeComments" does not include comments in compiled js file
+  - 
+
+noImplicitAny
+  - Does not allow an arugment with type any to be compiled
+  - Will throw an error
+  function sendAnalytics(data) {
+    console.log(data)
+  }
+  sendAnalytics('The data')
+  ERROR:
+  Parameter 'data' implicitly has an 'any' type.
+
+strictNullChecks 
+  - Checks for any possible null value
+  - If possible null value, error will throw
+  - If you know something will exist, use the ! 
+  - If you do not know, wrap the code in an if statement
