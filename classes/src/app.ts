@@ -1,120 +1,49 @@
-// Private attributes are only accessible in the class they are defined
-// Protected keyword makes attributes available to access in any inherited class
-// Static methods/variables can be used without instantiating a class
-// Therefore static methods/variables cannot be accessed inside the class unless called with className.method/var
+// interface describes the structure of an object
+// interface keyword only exists in TS
 
 
-// Abstract classes cannot be instantiated by themselves
-// Abstract classes are there to provide inheritance implementation to children classes
-// Methods marked as abstract will need to be defined in each child class
-abstract class Department {
-  // private name: string;
-  static fiscalYear = 2024
-  protected employees: string[] = [];
-  // readonly introduced by typescript
-  // readonly can be used once during intiailization and cannot be reassigned
-  constructor(protected readonly id: string, name: string) {
-    console.log(Department.fiscalYear)
-    // this.name = n
-  }
-
-  static createEmployee(name:string){
-    return {name:name}
-  }
-
-  abstract describe(this: Department): void
-
-
-  addEmployee(employee:string) {
-    this.employees.push(employee)
-  }
-
-  printEmployeeInformation() {
-    console.log(this.employees.length)
-    console.log(this.employees)
-  }
-}
-// extends keyword is used for inheritance
-class ITDepartmnet extends Department {
-  admins: string[]
-  constructor(id:string, admins: string[]) {
-    super(id, 'IT');     // super keyword is used in inheriting class. it calls the basis of the parent class 
-    this.admins = admins    // super keyword must precede any this attributes
-  }
-
-  describe(this: Department): void {
-    console.log(`IT Department - ID: ` + this.id)
-  }
+// interface inheritance
+interface Named {
+  readonly name: string
 }
 
-class AccountingDepartment extends Department {
-  // getters and setters
-  private lastReport: string;
-
-  constructor(id:string, private reports:string[]) {
-    super(id, 'Accounting')
-    this.lastReport = reports[0]
-  }
-
-  get mostRecentReport() {
-    if (this.lastReport) {
-      return this.lastReport
-    }
-    throw new Error('No report found')
-  }
-
-  set mostReceptReport(value:string) {
-    if (!value) {
-      throw new Error ('Pass in valid value')
-    }
-    this.addReports(value)
-  }
-
-  addEmployee(name:string) {
-    if (name === 'Max') {
-      return
-    }
-    this.employees.push(name)
-  }
-
-  addReports(text:string) {
-    this.reports.push(text)
-    this.lastReport = this.reports[this.reports.length-1]
-  }
-
-  printReports() {
-    console.log(this.reports)
-  }
+// can inherit from multiple interfaces
+interface Greetable extends Named { // interfaces only define structures, not concrete values
+  greet(phrase:string): void;
 }
 
-const itDept = new ITDepartmnet('1',['Max'])
 
-const employee1 = Department.createEmployee('Max')
-console.log(employee1, Department.fiscalYear)
+class Person implements Greetable { // implements keyword makes a class follow an interface structure
+  name:string
+  age = 30
+  constructor(n:string) {
+    this.name = n
+  }
 
-// const accounting =  new Department('d1', 'Accounting')
+  greet(phrase:string) {
+    console.log(phrase + ' ' + this.name)
+  }
+} 
 
-// accounting.addEmployee('Max');
-// accounting.addEmployee('Eric')
+// interfaces can type check an object
+// interface can be used as a type
+let user1: Greetable; // user1 is a Greetable object
 
-// accounting.describe()
-// accounting.printEmployeeInformation()
+user1 = new Person('Max') // user1 is a class that implements the interface Greetable
 
-// const accountCopy = { name:'DUMMY', describe: accounting.describe}
 
-// accountCopy.describe()
+user1.greet('Hi there - I am')
+console.log(user1)
 
-// itDept.addEmployee('Max');
-// itDept.addEmployee('Eric')
-// console.log(itDept)
+// Interface can be used as a contract that a class has to adhere to
 
-const accounting = new AccountingDepartment('d2', []);
 
-itDept.describe()
-accounting.addReports('Something went wrong')
-console.log(accounting.mostRecentReport)
-accounting.printReports()
+// can create function types with interfaces
+interface AddFn { 
+  (a:number, b:number): number // (arguments): return type
+}
 
-accounting.addEmployee('Max')
-accounting.addEmployee('Drew')
-console.log(accounting)
+let add: AddFn
+add = (n1:number, n2:number) => {
+  return n1 + n2
+}
